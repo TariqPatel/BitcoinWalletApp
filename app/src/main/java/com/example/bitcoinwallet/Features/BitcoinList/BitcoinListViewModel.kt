@@ -24,9 +24,9 @@ class BitcoinListViewModel : ViewModel() {
         val symbols = Constants.SYMBOLS
         val apiKey = Constants.API_KEY
 
-        var currentDate = Date()
+        val currentDate = Date()
         val endDate = formatDateToString(currentDate)
-        var startDate = formatDateToString(getDateBefore(currentDate, 1))
+        val startDate = formatDateToString(getDateBefore(currentDate, 1))
 
         val call = RetrofitClient.currencyApiService.getFluctuationCurrencyRates(
             startDate,endDate,baseCurrency, symbols, apiKey)
@@ -37,20 +37,20 @@ class BitcoinListViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     val apiResponse = response.body()
 
-                    var zar = apiResponse?.rates?.zar
-                    var usd = apiResponse?.rates?.usd
-                    var aud = apiResponse?.rates?.aud
+                    val zar = apiResponse?.rates?.zar
+                    val usd = apiResponse?.rates?.usd
+                    val aud = apiResponse?.rates?.aud
 
                     // Perform currency calculations
                     val zarCalculated = zar?.endRate?.times(btcOwned) ?: 0.0
                     val usdCalculated = usd?.endRate?.times(btcOwned) ?: 0.0
                     val audCalculated = aud?.endRate?.times(btcOwned) ?: 0.0
 
-                    var zarFluctuation = calculateRateDifference(
+                    val zarFluctuation = calculateRateDifference(
                         startRate = zar?.startRate, endRate = zar?.endRate)
-                    var usdFluctuation = calculateRateDifference(
+                    val usdFluctuation = calculateRateDifference(
                         startRate = usd?.startRate, endRate = usd?.endRate)
-                    var audFluctuation = calculateRateDifference(
+                    val audFluctuation = calculateRateDifference(
                         startRate = aud?.startRate, endRate = aud?.endRate)
 
                     // Create CurrencyModel objects
